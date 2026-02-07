@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
+const pool = require("./config/db");
+
 // Routes
 const authRoutes = require("./routes/authRoutes");
 const contentRoutes = require("./routes/contentRoutes");
@@ -10,6 +12,10 @@ const contentRoutes = require("./routes/contentRoutes");
 const authMiddleware = require("./middleware/authMiddleware");
 
 const app = express();
+
+pool.connect()
+  .then(() => console.log("PostgreSQL connected successfully"))
+  .catch(err => console.error("DB connection error", err));
 
 app.use(cors());
 app.use(express.json());
